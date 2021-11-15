@@ -1,5 +1,6 @@
 import { TextField } from '@mui/material'
 import React from 'react'
+import { useForm, Controller } from "react-hook-form";
 
 export const Input = (props) => {
   const { name, label, value, error = null, onChange, ...other } = props
@@ -37,3 +38,22 @@ export const InputRef2 = React.forwardRef(({ name, label, value, error = null, o
       {...(error && { error: true, helperText: error })}
     />
 ));
+
+<Controller
+        name="firstName"
+        control={control}
+        render={({ field }) => <Input {...field} />}
+      />
+
+      <Controller
+        name="select"
+        control={control}
+        render={({ field }) => <Select 
+          {...field} 
+          options={[
+            { value: "chocolate", label: "Chocolate" },
+            { value: "strawberry", label: "Strawberry" },
+            { value: "vanilla", label: "Vanilla" }
+          ]} 
+        />}
+      />
