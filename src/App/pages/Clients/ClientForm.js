@@ -2,28 +2,35 @@ import React from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { Grid } from '@mui/material'
 import { Controls } from '../../components/controls/Controls'
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
+const schema = yup.object({
+  firstname: yup.string().required(),
+  lastname: yup.string().required(),
+  age: yup.number().positive().integer().required(),
+  birthdate: yup.date().required('Date is required'),
+}).required();
 
 export default function ClientForm() {
   const {
-    register,
     reset,
     handleSubmit,
-    watch,
     control,
     formState: { errors },
-  } = useForm()
-  const onSubmit = (data) => console.log(data)
-  const defaultValues = {
-    firstname: '',
-    lastname: '',
-    age: '',
-    birthDate: new Date(),
-  }
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      firstname: 'Ghis',
+      lastname: 'ANC',
+      age: '39',
+      birthdate: new Date(),
+    }
+  });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    console.log({ [name]: value })
-  }
+  console.log("Forms:render", errors);
+
+  const onSubmit = (data) => console.log('Forms:onSubmit:', data)
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -34,31 +41,32 @@ export default function ClientForm() {
             label="Firstname"
             name="firstname"
             value={'ghislain'}
+            error={errors.firstname?.message}
           />
           <Controls.Input
             control={control}
             label="LastName"
             name="lastname"
             value={'ANCIAUX'}
+            error={errors.lastname?.message}
+          />
+          <Controls.DatePicker2
+            control={control}
+            label="BirthDate"
+            name="birthdate"
+            value={new Date()}
           />
           <Controls.Input
             control={control}
             label="Age"
             name="age"
             value={'39'}
-          />
-          <Controls.DatePicker2
-            control={control}
-            label="BirthDate"
-            name="birtdate"
-            value={new Date()}
+            error={errors.age?.message}
           />
         </Grid>
       </Grid>
       <Controls.Button type="submit" text="Valider" />
-      <button type="button" onClick={() => reset(defaultValues)}>
-        reset 2
-      </button>
+      <Controls.Button type="submit" text="Reset" onClick={() => reset()}/>
     </form>
   )
 }
