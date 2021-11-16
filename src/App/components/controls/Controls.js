@@ -1,15 +1,12 @@
 import Button from './Button'
-import DatePicker from './DatePicker'
-import {Input, InputRef, InputRef2} from './Input'
+import { DatePicker, DatePicker2 } from './DatePicker'
+import { Input } from './Input'
 import Select from './Select'
-
-
 
 export const Controls = {
   Button,
   DatePicker,
+  DatePicker2,
   Input,
-  InputRef,
-  InputRef2,
-  Select
+  Select,
 }
