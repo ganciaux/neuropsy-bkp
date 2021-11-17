@@ -33,14 +33,18 @@ export function DatePicker(props) {
 }
 
 export function DatePicker2(props) {
-  const { name, label, value, control } = props
+  const { name, label, value, control, error = null } = props
 
+  console.log('DatePicker2:', error)
   return (
     <Controller
       control={control}
       name={name}
       defaultValue={value}
-      render={({ field: { onChange, onBlur, value, name, ref }, fieldState: { invalid, isTouched, isDirty, error }, }) => (
+      render={({
+        field: { onChange, onBlur, value, name, ref },
+        fieldState: { invalid, isTouched, isDirty },
+      }) => (
         <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
           <MuiDatePicker
             label={label}
@@ -48,11 +52,14 @@ export function DatePicker2(props) {
             inputVariant="outlined"
             value={value}
             format="MM/dd/yyyy"
-            {...(error && { error: true, helperText: error })}
-            onChange={(date) =>
-              onChange(convertToDefEventPara(name, date))
-            }
-            renderInput={(params) => <TextField {...params} />}
+            onChange={(date) => onChange(convertToDefEventPara(name, date))}
+            renderInput={(params) => (
+              <TextField
+                margin="normal"
+                {...(error && { error: true, helperText: error })}
+                {...params}
+              />
+            )}
           />
         </LocalizationProvider>
       )}

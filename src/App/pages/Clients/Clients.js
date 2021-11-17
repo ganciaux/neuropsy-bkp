@@ -1,14 +1,10 @@
 import React from 'react'
 import PageHeader from '../../components/PageHeader'
-import {
-  PeopleOutlineOutlined,
-} from '@mui/icons-material'
-import {
-  Paper,
-  Toolbar,
-} from '@mui/material'
+import { PeopleOutlineOutlined } from '@mui/icons-material'
+import { Paper, Toolbar } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import ClientForm from './ClientForm'
+import ClientTable from './ClientTable'
 
 const useStyles = makeStyles((theme) => ({
   pageContent: {
@@ -18,9 +14,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Clients() {
-    const classes = useStyles()
-    return (
-        <>
+  const classes = useStyles()
+  return (
+    <>
       <PageHeader
         title="New client"
         subTitle="Form with validation"
@@ -29,8 +25,9 @@ export default function Clients() {
       <Paper className={classes.pageContent}>
         <Toolbar>
           <ClientForm />
+          <ClientTable />
         </Toolbar>
       </Paper>
     </>
-    )
+  )
 }
